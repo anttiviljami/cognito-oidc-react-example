@@ -2,5 +2,25 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "Cognito OIDC React Example"
 Resources:
-  UserPool:
+  OIDCUserPool:
     Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Ref AWS::StackName
+      AliasAttributes:
+        - email
+  OIDCUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref OIDCUserPool
+      AllowedOAuthFlows: ["code"]
+      AllowedOAuthScopes: ["openid"]
+      AllowedOAuthFlowsUserPoolClient: true
+      CallbackURLs:
+        - "http://localhost:3000"
+      LogoutURLs:
+        - "http://localhost:3000"
+  OIDCHostedUIDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      UserPoolId: !Ref OIDCUserPool
+      Domain: !Ref AWS::StackName

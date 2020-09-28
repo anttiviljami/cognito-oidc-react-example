@@ -7,5 +7,5 @@ Sample React app using [`oidc-client`](https://github.com/IdentityModel/oidc-cli
 ## Deploy
 
 ```
-aws cloudformation deploy --template-file cloudformation.yml --stack-name cognito-oidc-example
+aws cloudformation deploy --template-file cloudformation.yml --stack-name oidc-example
 ```
