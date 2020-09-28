@@ -8,6 +8,7 @@ Resources:
       UserPoolName: !Ref AWS::StackName
       AliasAttributes:
         - email
+
   OIDCUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
@@ -28,6 +29,7 @@ Resources:
     Properties:
       UserPoolId: !Ref OIDCUserPool
       Domain: !Ref AWS::StackName
+
   GitHubIdP:
     Type: AWS::Cognito::UserPoolIdentityProvider
     Properties:
