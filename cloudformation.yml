@@ -12,15 +12,39 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       UserPoolId: !Ref OIDCUserPool
-      AllowedOAuthFlows: ["code"]
-      AllowedOAuthScopes: ["openid"]
+      AllowedOAuthFlows:
+        - code
+      AllowedOAuthScopes:
+        - openid
       AllowedOAuthFlowsUserPoolClient: true
       CallbackURLs:
         - "http://localhost:3000"
       LogoutURLs:
         - "http://localhost:3000"
+      SupportedIdentityProviders:
+        - !Ref GitHubIdP
   OIDCHostedUIDomain:
     Type: AWS::Cognito::UserPoolDomain
     Properties:
       UserPoolId: !Ref OIDCUserPool
       Domain: !Ref AWS::StackName
+  GitHubIdP:
+    Type: AWS::Cognito::UserPoolIdentityProvider
+    Properties:
+      UserPoolId: !Ref OIDCUserPool
+      ProviderName: GitHub
+      ProviderType: OIDC
+      ProviderDetails:
+        # https://github.com/TimothyJones/github-cognito-openid-wrapper
+        oidc_issuer: https://75jeux5dx9.execute-api.eu-west-1.amazonaws.com/prod
+        client_id: f5afd0fde246a399d1c0
+        attributes_request_method: GET
+        authorize_scopes: "openid read:user user:email"
+      AttributeMapping:
+        email: email
+        username: sub
+        name: name
+        picture: picture
+        profile: profile
+        updated_at: updated_at
+        email_verified: email_verified
