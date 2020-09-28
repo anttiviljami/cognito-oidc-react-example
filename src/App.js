@@ -14,7 +14,7 @@ const App = () => {
     );
   } else {
     return (
-      <div className="App">
+      <div className="Login">
         <h1>Please log in</h1>
         <button onClick={() => userManager.signinRedirect()}>Login</button>
       </div>
